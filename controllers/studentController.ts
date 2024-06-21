@@ -30,7 +30,7 @@ export const getStudent = async (req: Request, res: Response) => {
     }
 }
 
-export const deleteStudents = async (req: Request, res: Response) => {
+export const deleteStudent = async (req: Request, res: Response) => {
     const { id } = req.params
     const doc = await getDocument(COLLECTIONS.USERS, id)
     if (doc.exists()) {
