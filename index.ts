@@ -7,7 +7,8 @@ import router from "./routes";
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT || 5001;
+const port = process.env.PORT;
+console.log("port",process.env.PORT)
 
 app.use(cors())
 

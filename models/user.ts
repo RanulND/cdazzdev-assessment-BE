@@ -1,8 +1,10 @@
 import { DocumentReference } from "firebase/firestore"
-import { ROLES } from "../utils/enums"
 
 export default interface User {
-    name: string
-    userId: DocumentReference
+    firstname: string
+    lastname: string
+    userId?: string
     role: string
+    email: string
+    password: string
 }
