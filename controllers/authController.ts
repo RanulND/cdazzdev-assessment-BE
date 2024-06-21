@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createDoc, userExist } from "../utils/firebase/firestore";
+import { createDoc, docExist } from "../utils/firebase/firestore";
 import { errorResponse, successResponse } from "../utils/responses";
 import User from "../models/user";
 import { COLLECTIONS, ROLES } from "../utils/enums";
@@ -24,8 +24,8 @@ const getAccessToken = (user: User, res: Response) => {
 
 export const signIn = async (req: Request, res: Response) => {
     const { email, password } = req.body;
-    const { isUserExist, snaps } = await userExist(email)
-    if (isUserExist) {
+    const { isDocExist, snaps } = await docExist("email", email, COLLECTIONS.USERS)
+    if (isDocExist) {
         const user: User = { ...snaps.docs[0].data() as User, userId: snaps.docs[0].id }
         let cmp = bcrypt.compareSync(password, user.password)
         if (cmp) {
@@ -42,10 +42,10 @@ export const signIn = async (req: Request, res: Response) => {
 }
 
 export const register = async (req: Request, res: Response) => {
-    const { email, password, firstname, lastname } = req.body
-    const { isUserExist } = await userExist(email)
+    const { email, password } = req.body
+    const { isDocExist } = await docExist("email", email, COLLECTIONS.USERS)
 
-    if (isUserExist) {
+    if (isDocExist) {
         return errorResponse(res, "User already exists. Please login", 403)
     }
 
