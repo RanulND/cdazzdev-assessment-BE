@@ -8,7 +8,6 @@ dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT;
-console.log("port",process.env.PORT)
 
 app.use(cors())
 
@@ -33,7 +32,7 @@ app.use('*', function(req: Request, res: Response, next) {
 });
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
+  res.send("cdazzdev is live!");
 });
 
 app.use("/api", router)

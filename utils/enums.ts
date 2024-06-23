@@ -8,3 +8,8 @@ export enum COLLECTIONS {
     COURSES = "courses",
     ENROLLMENTS = "enrollments"
 }
+
+export enum courseModes {
+    ONLINE = "online",
+    PHYSICAL = "physical"
+}

@@ -66,7 +66,7 @@ export const getAllCourse = async (req: Request, res: Response) => {
     const courses: Course[] = []
     try {
         const snaps = await getAllDocs(COLLECTIONS.COURSES)
-        snaps.forEach(doc => courses.push({ ...doc.data() as Course, courseId: doc.id as any }))
+        snaps.forEach(doc => courses.push({ ...doc.data() as Course, courseId: doc.id }))
         return successResponse(res, "courses retireved", courses,200)
     } catch {
         return errorResponse(res, "an error occured", 500)

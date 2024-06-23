@@ -12,6 +12,12 @@ export const docExist = async (key: string, value: string, collectionRef: string
     return { isDocExist: !snaps.empty, snaps: snaps }
 }
 
+export const enrollmentExist = async (userId: string, courseId: string, collectionRef: string) => {
+    const q = query(collection(db, collectionRef), where("userId", "==", userId), where("courseId","==",courseId))
+    const snaps = await getDocs(q)
+    return { isDocExist: !snaps.empty, snaps: snaps }
+}
+
 export const createDoc = (collectionRef: string, data: User | Course | Enrollment) => addDoc(collection(db, collectionRef), data)
 
 export const update = (collectionRef: string, data:object, docRef: string) => updateDoc(doc(db,collectionRef,docRef),data)

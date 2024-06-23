@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createDoc, deleteDocument, docExist, getAllDocs, getDocument, update } from "../utils/firebase/firestore";
+import { createDoc, deleteDocument, enrollmentExist, getAllDocs, getDocument, update } from "../utils/firebase/firestore";
 import { COLLECTIONS } from "../utils/enums";
 import { ackResponse, errorResponse, successResponse } from "../utils/responses";
 import Enrollment from "../models/enrollment";
@@ -7,7 +7,7 @@ import Enrollment from "../models/enrollment";
 export const createEnrollment = async (req: Request, res: Response) => {
     const { courseId, userId } = req.body
 
-    const { isDocExist } = await docExist("name", userId, COLLECTIONS.ENROLLMENTS)
+    const { isDocExist } = await enrollmentExist("name", userId, COLLECTIONS.ENROLLMENTS)
 
     if (isDocExist) {
         errorResponse(res, "Enrollment name already taken", 403)
@@ -66,7 +66,7 @@ export const getAllEnrollment = async (req: Request, res: Response) => {
     const enrollments: Enrollment[] = []
     try {
         const snaps = await getAllDocs(COLLECTIONS.ENROLLMENTS)
-        snaps.forEach(doc => enrollments.push({ ...doc.data() as Enrollment, enrollmentId: doc.id as any }))
+        snaps.forEach(doc => enrollments.push({ ...doc.data() as Enrollment, enrollmentId: doc.id }))
         return successResponse(res, "Enrollments retireved", enrollments,200)
     } catch {
         return errorResponse(res, "an error occured", 500)
