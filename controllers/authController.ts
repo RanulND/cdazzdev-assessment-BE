@@ -50,7 +50,7 @@ export const register = async (req: Request, res: Response) => {
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10)
-    const user: User = { ...req.body, password: hashedPassword, role: ROLES.ADMIN }
+    const user: User = { ...req.body, password: hashedPassword, role: ROLES.STUDENT }
     const doc = await createDoc(COLLECTIONS.USERS, user)
 
     if (doc) {
